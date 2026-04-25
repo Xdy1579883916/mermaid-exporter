@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MermaidEditor } from '@/components/MermaidEditor';
 import { MermaidPreview } from '@/components/MermaidPreview';
 import { ExportPanel } from '@/components/ExportPanel';
 import { ThemeSelector } from '@/components/ThemeSelector';
 import { ExampleTemplates } from '@/components/ExampleTemplates';
-import { Palette, Code, Eye } from 'lucide-react';
+import { Palette, Code, Eye, Maximize2, Minimize2 } from 'lucide-react';
 
 const defaultMermaidCode = `graph TD
     A[开始] --> B{是否登录?}
@@ -21,6 +21,28 @@ export default function EditorPage() {
   const [mermaidCode, setMermaidCode] = useState(defaultMermaidCode);
   const [theme, setTheme] = useState('default');
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [isPreviewFullscreen, setIsPreviewFullscreen] = useState(false);
+
+  useEffect(() => {
+    if (!isPreviewFullscreen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsPreviewFullscreen(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isPreviewFullscreen]);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -37,7 +59,7 @@ export default function EditorPage() {
             <span className="text-sm font-medium text-gray-700">主题:</span>
             <ThemeSelector theme={theme} onThemeChange={setTheme} />
           </div>
-          
+
           <div className="flex items-center gap-2">
             <ExampleTemplates onTemplateSelect={setMermaidCode} />
           </div>
@@ -63,7 +85,7 @@ export default function EditorPage() {
                 </>
               )}
             </button>
-            
+
             <ExportPanel mermaidCode={mermaidCode} theme={theme} />
           </div>
         </div>
@@ -90,13 +112,38 @@ export default function EditorPage() {
         </div>
 
         {/* 预览区域 */}
-        <div className={`${!isPreviewMode ? 'hidden md:block' : 'block'}`}>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden h-[600px] md:h-[700px]">
-            <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+        <div
+          className={`${
+            isPreviewFullscreen
+              ? 'fixed inset-0 z-50 block bg-white p-4'
+              : !isPreviewMode
+                ? 'hidden md:block'
+                : 'block'
+          }`}
+        >
+          <div
+            className={`bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ${
+              isPreviewFullscreen ? 'h-full' : 'h-150 md:h-175'
+            }`}
+          >
+            <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
                 <Eye className="w-5 h-5" />
                 实时预览
               </h2>
+              <button
+                type="button"
+                onClick={() => setIsPreviewFullscreen((value) => !value)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900"
+                title={isPreviewFullscreen ? '退出全屏' : '全屏预览'}
+                aria-label={isPreviewFullscreen ? '退出全屏' : '全屏预览'}
+              >
+                {isPreviewFullscreen ? (
+                  <Minimize2 className="w-4 h-4" />
+                ) : (
+                  <Maximize2 className="w-4 h-4" />
+                )}
+              </button>
             </div>
             <div className="h-[calc(100%-60px)] overflow-auto">
               <MermaidPreview

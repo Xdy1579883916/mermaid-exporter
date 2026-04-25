@@ -152,30 +152,64 @@ export default function Home() {
           <h3 className="text-2xl font-bold text-gray-900 mb-6">
             关于项目
           </h3>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-700">
-            <div className="flex items-center gap-2">
-              <User className="w-5 h-5 text-blue-600" />
-              <span className="font-medium">作者：brian</span>
+          <p className="text-gray-600 mb-6">
+            Fork 版本增加了 Leafer UI 画布渲染，支持按住 Ctrl 缩放、拖拽预览视图和全屏预览，
+            查看复杂图表更方便。
+          </p>
+          <div className="space-y-4 text-gray-700">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                <User className="w-5 h-5 text-blue-600" />
+                <span className="font-medium">原作者：brian</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-5 h-5 text-blue-600" />
+                <a
+                  href="mailto:xiadong1234ac@163.com"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  xiadong1234ac@163.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Github className="w-5 h-5 text-blue-600" />
+                <a
+                  href="https://github.com/brianxiadong/mermaid-exporter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
+                  原项目仓库
+                </a>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-blue-600" />
-              <a 
-                href="mailto:xiadong1234ac@163.com" 
-                className="hover:text-blue-600 transition-colors"
-              >
-                xiadong1234ac@163.com
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Github className="w-5 h-5 text-blue-600" />
-              <a 
-                href="https://github.com/brianxiadong/mermaid-exporter" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-blue-600 transition-colors font-medium"
-              >
-                GitHub 仓库
-              </a>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                <User className="w-5 h-5 text-blue-600" />
+                <span className="font-medium">Fork 维护：Rainbow</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Github className="w-5 h-5 text-blue-600" />
+                <a
+                  href="https://github.com/Xdy1579883916"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  GitHub 主页
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Github className="w-5 h-5 text-blue-600" />
+                <a
+                  href="https://github.com/Xdy1579883916/mermaid-exporter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors font-medium"
+                >
+                  Fork 仓库
+                </a>
+              </div>
             </div>
           </div>
           <p className="text-sm text-gray-500 mt-4">

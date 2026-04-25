@@ -47,7 +47,8 @@ export function MermaidPreview({ code, theme }: MermaidPreviewProps) {
         },
         move: {
           drag: true,
-        }
+        },
+        wheel: { zoomMode: true }
       });
       const image = new Image({
         draggable: true,
